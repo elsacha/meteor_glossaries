@@ -1,0 +1,106 @@
+<head>
+  <title>Glossaries</title>
+</head>
+
+<body>
+</body>
+
+<!-- this is the main template used by iron:router to build the page -->
+<template name="ApplicationLayout">
+  {{> yield "header"}}
+  
+  <div class="container">
+  {{> yield "main"}}
+  </div>
+</template>
+
+<!-- top level template for the nav bar -->
+<template name="navbar">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">
+        Glossaries
+      </a>
+    </div>
+    <div class="nav navbar-nav">
+    {{> loginButtons}}
+</div>
+  </div>
+</nav>
+</template>
+
+<!-- Top level template for the lobby page -->
+<template name="glossaries">
+  <h3>Glossaries</h3>
+</template>
+
+<!-- display a list of users -->
+<template name="available_user_list">
+  <h2>Choose someone to chat with:</h2>
+  <div class="row">
+  {{#each users}}
+  {{> available_user}}
+  {{/each}}
+</div>
+</template>
+
+<!-- display an individual user -->
+<template name="available_user">
+  <div class="col-md-2">
+    <div class="user_avatar">
+      {{#if isMyUser _id}} 
+      <div class="bg-success">{{getUsername _id}} (YOU)
+        <br/>
+        <img src="{{profile.avatar}}" class="avatar_img">     
+      </div>
+      {{else}}
+      <a href="/chat/{{_id}}">
+        {{getUsername _id}}
+        <br/>
+        <img src="{{profile.avatar}}" class="avatar_img">
+      </a>
+      {{/if}}
+    </div>
+  </div>
+</template>
+
+
+<!-- Top level template for the chat page -->
+<template name="chat_page">
+  <h2>Type in the box below to send a message! Type ;-), :-), :D... to send an emoticon</h2>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="well well-lg">
+        {{#each messages}}
+        {{> chat_message}}
+        {{/each}}
+      </div>  
+    </div>
+  </div>
+    <div class="row">
+    <div class="col-md-12">
+      <form class="js-send-chat">
+      <input class="input" type="text" name="chat" placeholder="type a message here...">
+      <!--<p>{{parseEmoticons "text"}}</p>-->
+      <button class="btn btn-default">send</button>
+    </form>
+    </div>
+  </div>
+</template>
+
+<!-- simple template that displays a message -->
+<template name="chat_message">
+  <img src="/{{avatar user_id}}" alt="" style="width:50px; height:50px;"> {{username user_id}} said: {{{parseEmoticons text}}}
+  <br>
+</template>
+
+<template name="not_authorized">
+  <h1>Minstant</h1>
+  <h2>Minstant is an instant messaging site</h2>
+  <h3>Please log in to start a chat</h3>
+  <p>You can run a test chat between any two users out of user1@test.com, user2@test.com, .... user8@test.com (password: test123)</p>
+</template>
+
+
+
