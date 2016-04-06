@@ -32,36 +32,31 @@
 
 <!-- Top level template for the lobby page -->
 <template name="glossaries">
-  <h3>Glossaries</h3>
+  <div class="row">
+    {{#each public_glossaries}}
+      {{> glossary}}
+    {{/each}}
+  </div>
 </template>
 
 <!-- display a list of users -->
-<template name="available_user_list">
-  <h2>Choose someone to chat with:</h2>
-  <div class="row">
-  {{#each users}}
-  {{> available_user}}
+<template name="glossary">
+  <h3>{{this.title}}</h3>
+  <p>{{this.source_language}} - {{this.target_language}}</p>
+  <p>Subject: {{this.subject}}</p>
+  <h4>Terms:</h4>
+  <ol>
+  {{#each this.terms}}
+    <li>{{this.source_term}} - {{this.target_term}}</li>
   {{/each}}
-</div>
+</ol>
 </template>
 
-<!-- display an individual user -->
-<template name="available_user">
-  <div class="col-md-2">
-    <div class="user_avatar">
-      {{#if isMyUser _id}} 
-      <div class="bg-success">{{getUsername _id}} (YOU)
-        <br/>
-        <img src="{{profile.avatar}}" class="avatar_img">     
-      </div>
-      {{else}}
-      <a href="/chat/{{_id}}">
-        {{getUsername _id}}
-        <br/>
-        <img src="{{profile.avatar}}" class="avatar_img">
-      </a>
-      {{/if}}
-    </div>
+<template name="term">
+  <div class="row">
+    {{#each public_glossaries}}
+      {{> glossary}}
+    {{/each}}
   </div>
 </template>
 

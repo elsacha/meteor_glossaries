@@ -38,3 +38,10 @@ Router.route('/', function () {
   // }
 });
 
+Router.route('/glossaries', function () {
+    console.log("rendering /glossaries");
+    //this.render("navbar", {to:"header"});
+    this.render("glossaries", {to:"main"});  
+  // }
+});
+
