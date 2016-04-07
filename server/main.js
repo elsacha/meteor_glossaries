@@ -28,7 +28,8 @@ Meteor.startup(() => {
         		}
         	],
         	
-        	glossary_author: "author1"
+        	glossary_author: "author1",
+            public: true
     	   },
     	   {
     	   	title: "Tourism",
@@ -51,7 +52,8 @@ Meteor.startup(() => {
 	        		term_author: "author3"
         		}
         	],
-       		glossary_author: "author2"
+       		glossary_author: "author2",
+            public: true
     	   }
     	];
     	//apparently multiple document insert does not function in Meteor's mongodb

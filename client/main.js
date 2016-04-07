@@ -45,3 +45,23 @@ Router.route('/glossaries', function () {
   // }
 });
 
+Router.route('/add', function () {
+    console.log("rendering /add");
+    //this.render("navbar", {to:"header"});
+    this.render("insertGlossaryForm", {to:"main"});  
+  // }
+});
+
+Router.route('/update/:_id', {
+    //console.log("rendering /update" + this.params._id);
+    //this.render("navbar", {to:"header"});
+    template: "updateGlossaryForm",
+    data: function(){
+        var currentGlossary = this.params._id;
+        return Glossaries.findOne({ _id: currentGlossary});
+    }
+    //this.render("updateGlossaryForm", {to:"main"});  
+  // }
+});
+
+
