@@ -33,7 +33,7 @@ Router.route('/', function () {
   //   this.render("not_authorized", {to: "main"});
   // } else {
     console.log("rendering root");
-    //this.render("navbar", {to:"header"});
+    this.render("navbar", {to:"header"});
     this.render("glossaries", {to:"main"});  
   // }
 });
@@ -58,9 +58,16 @@ Router.route('/update/:_id', {
     template: "updateGlossaryForm",
     data: function(){
         var currentGlossary = this.params._id;
-        return Glossaries.findOne({ _id: currentGlossary});
+        return Glossaries.findOne({_id: currentGlossary});
     }
     //this.render("updateGlossaryForm", {to:"main"});  
+  // }
+});
+
+Router.route('/my_glossaries', function () {
+    console.log("rendering /my_glossaries");
+    //this.render("navbar", {to:"header"});
+    this.render("myGlossaries", {to:"main"});  
   // }
 });
 

@@ -52,6 +52,14 @@
 </ol>
 </template>
 
+<template name="myGlossaries">
+  <div class="row">
+    {{#each my_glossaries}}
+      {{> glossary}}
+    {{/each}}
+  </div>
+</template>
+
 <template name="insertGlossaryForm">
   {{> quickForm collection="Glossaries" id="insertGlossaryForm" type="insert"}}
 </template>
