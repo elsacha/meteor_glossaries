@@ -64,6 +64,44 @@
   {{> quickForm collection="Glossaries" id="insertGlossaryForm" type="insert"}}
 </template>
 
+<!-- <template name="insertGlossaryForm">
+  {{#autoForm collection="Glossaries" id="insertGlossaryForm" type="insert"}}
+  <fieldset>
+    <legend>Add a Book</legend>
+    {{> afQuickField name='title'}}
+    {{> afQuickField name='source_language'}}
+    {{> afQuickField name='target_language'}}
+    {{> afQuickField name='subject'}}
+    {{> afQuickField name='public'}}
+    {{#afEachArrayItem name="terms"}}
+
+        <button type="button" class="btn btn-primary autoform-remove-item"><span class="glyphicon glyphicon-minus"></span></button>
+        {{> afFieldInput name=this.current.source_term}}  
+        {{> afFieldInput name=this.current.target_term}}
+        {{> afFieldInput name=this.current.comment}}
+
+    {{/afEachArrayItem}}
+    {{> afQuickField name='terms.source_term'}}
+    {{> afQuickField name='terms.target_term'}}
+    {{> afQuickField name='comment'}}
+    {{> afQuickField name='terms' rows=6}}
+    {{> afQuickField name='copies'}}
+    {{> afQuickField name='lastCheckedOut'}}
+    <div class="form-group{{#if afFieldIsInvalid name='cost'}} has-error{{/if}}">
+      <div class="input-group">
+        <span class="input-group-addon">$</span>
+        {{> afFieldInput name='cost'}}
+        <span class="input-group-addon">/each</span>
+      </div>
+      {{#if afFieldIsInvalid name='cost'}}
+      <span class="help-block">{{afFieldMessage name='cost'}}</span>
+      {{/if}}
+    </div>
+  </fieldset>
+  <button type="submit" class="btn btn-primary">Insert</button>
+  {{/autoForm}}
+</template> -->
+
 <template name="updateGlossaryForm">
   {{> quickForm collection="Glossaries" doc=this id="updateGlossaryForm" type="update"}}
 </template>
