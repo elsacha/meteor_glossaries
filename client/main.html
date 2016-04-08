@@ -35,11 +35,12 @@
   <div class="row">
     {{#each public_glossaries}}
       {{> glossary}}
+      {{> quickRemoveButton collection="Glossaries" _id=this._id beforeRemove=beforeRemove}}
     {{/each}}
   </div>
 </template>
 
-<!-- display a list of users -->
+<!-- display a list of glossaries -->
 <template name="glossary">
   <h3>{{this.title}}</h3>
   <p>{{this.source_language}} - {{this.target_language}}</p>
@@ -56,6 +57,7 @@
   <div class="row">
     {{#each my_glossaries}}
       {{> glossary}}
+      {{> quickRemoveButton collection="Glossaries" _id=this._id}}
     {{/each}}
   </div>
 </template>
@@ -106,6 +108,27 @@
   {{> quickForm collection="Glossaries" doc=this id="updateGlossaryForm" type="update"}}
 </template>
 
+<!-- <template name="updateGlossaryForm">
+  {{#autoForm collection="Glossaries" doc=this id="updateGlossaryForm" type="update"}}
+  <fieldset>
+    <legend>Glossary update</legend>
+    {{> afQuickField name='title'}}
+    {{> afQuickField name='source_language'}}
+    {{> afQuickField name='target_language'}}
+    {{> afQuickField name='subject'}}
+    {{> afQuickField name='public'}}
+    {{#afEachArrayItem name="terms"}}
+      <div class="autoform-array-item">
+        <button type="button" class="autoform-remove-item">Remove</button>
+        {{> afFieldInput name=this.current.source_term}}  
+        {{> afFieldInput name=this.current.target_term}}
+        {{> afFieldInput name=this.current.comment}}
+      </div>
+    {{/afEachArrayItem}}
+  </fieldset>
+  <button type="submit" class="btn btn-primary">Insert</button>
+  {{/autoForm}}
+</template> -->
 
 
 

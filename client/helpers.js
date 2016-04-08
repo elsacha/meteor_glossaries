@@ -6,6 +6,14 @@ Template.glossaries.helpers({
   //display all publicly available glossaries
   public_glossaries:function(){
     return Glossaries.find();
+  },
+  beforeRemove: function () {
+    return function (collection, id) {
+      var doc = collection.findOne(id);
+      if (confirm('Really delete "' + doc.name + '"?')) {
+        this.remove();
+      }
+    };
   }
 })
 

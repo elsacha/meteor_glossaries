@@ -71,4 +71,15 @@ Router.route('/my_glossaries', function () {
   // }
 });
 
+//delete null values from the array of terms when terms are deleted in the update form
+AutoForm.addHooks(['updateGlossaryForm'],
+{
+  formToModifier: function(modifier) {
+    if (modifier.$set.terms) {
+      modifier.$set.terms = _.compact(modifier.$set.terms);
+    }
+    return modifier;
+  }
+});
+
 
