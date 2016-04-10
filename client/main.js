@@ -52,6 +52,17 @@ Router.route('/add', function () {
   // }
 });
 
+//view glossary by id
+Router.route('/view/:_id', {
+    template: "glossary_full_view",
+    data: function(){
+        var currentGlossary = this.params._id;
+        return Glossaries.findOne({_id: currentGlossary});
+    }
+    //this.render("updateGlossaryForm", {to:"main"});  
+  // }
+});
+
 Router.route('/update/:_id', {
     //console.log("rendering /update" + this.params._id);
     //this.render("navbar", {to:"header"});
@@ -68,6 +79,13 @@ Router.route('/my_glossaries', function () {
     console.log("rendering /my_glossaries");
     //this.render("navbar", {to:"header"});
     this.render("myGlossaries", {to:"main"});  
+  // }
+});
+
+Router.route('/search', function () {
+    console.log("rendering /search");
+    //this.render("navbar", {to:"header"});
+    this.render("searchBox", {to:"main"});  
   // }
 });
 

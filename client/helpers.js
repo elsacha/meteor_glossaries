@@ -17,6 +17,17 @@ Template.glossaries.helpers({
   }
 })
 
+Template.glossary_full_view.helpers({
+  beforeRemove: function () {
+    return function (collection, id) {
+      var doc = collection.findOne(id);
+      if (confirm('Really delete "' + doc.name + '"?')) {
+        this.remove();
+      }
+    };
+  }
+})
+
 // Template.glossary.helpers({
 //   //display all publicly available glossaries
 //   title: function(glos_id){
@@ -42,3 +53,7 @@ Template.myGlossaries.helpers({
     return Glossaries.find({glossary_author: Meteor.userId()});
   }
 })
+
+Template.searchBox.helpers({
+  glossariesIndex: () => GlossariesIndex
+});

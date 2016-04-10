@@ -34,14 +34,24 @@
 <template name="glossaries">
   <div class="row">
     {{#each public_glossaries}}
-      {{> glossary}}
-      {{> quickRemoveButton collection="Glossaries" _id=this._id beforeRemove=beforeRemove}}
+      {{> glossary_concise_view}}
+      <!-- {{> quickRemoveButton collection="Glossaries" _id=this._id beforeRemove=beforeRemove}} -->
     {{/each}}
   </div>
 </template>
 
-<!-- display a list of glossaries -->
-<template name="glossary">
+<!-- glossary consisi view (title, language combination) -->
+<template name="glossary_concise_view">
+  <h3>{{this.title}}</h3>
+  <p>
+    {{this.source_language}} - {{this.target_language}}
+    Subject: {{this.subject}} 
+    <a href="/view/{{this._id}}" class="btn btn-primary" role="button">View</a>
+  </p>
+</template>
+
+<!-- full glossary view -->
+<template name="glossary_full_view">
   <h3>{{this.title}}</h3>
   <p>{{this.source_language}} - {{this.target_language}}</p>
   <p>Subject: {{this.subject}}</p>
@@ -51,6 +61,8 @@
     <li>{{this.source_term}} - {{this.target_term}}</li>
   {{/each}}
 </ol>
+<a href="/update/{{this._id}}" class="btn btn-primary" role="button">Update</a>
+{{> quickRemoveButton collection="Glossaries" _id=this._id beforeRemove=beforeRemove}}
 </template>
 
 <template name="myGlossaries">
@@ -129,6 +141,18 @@
   <button type="submit" class="btn btn-primary">Insert</button>
   {{/autoForm}}
 </template> -->
+
+<template name="searchBox">
+    {{> EasySearch.Input index=glossariesIndex }}
+    <!-- <div class="autosuggest-component">
+      {{> EasySearch.Autosuggest index=glossariesIndex}}
+    </div> -->
+    <ul>
+        {{#EasySearch.Each index=glossariesIndex }}
+            <li><a href="/view/{{this._id}}">{{title}}</a></li>
+        {{/EasySearch.Each}}
+    </ul>
+</template>
 
 
 
