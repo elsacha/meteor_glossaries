@@ -40,33 +40,39 @@ Router.route('/', function () {
 
 Router.route('/glossaries', function () {
     console.log("rendering /glossaries");
-    //this.render("navbar", {to:"header"});
+    this.render("navbar", {to:"header"});
     this.render("glossaries", {to:"main"});  
   // }
 });
 
 Router.route('/add', function () {
     console.log("rendering /add");
-    //this.render("navbar", {to:"header"});
+    this.render("navbar", {to:"header"});
     this.render("insertGlossaryForm", {to:"main"});  
   // }
 });
 
 //view glossary by id
 Router.route('/view/:_id', {
-    template: "glossary_full_view",
+    //template: "glossary_full_view",
+    yieldTemplates: {
+            'navbar': { to: 'header'},
+            'glossary_full_view': { to: 'main'}
+    },
     data: function(){
         var currentGlossary = this.params._id;
         return Glossaries.findOne({_id: currentGlossary});
     }
-    //this.render("updateGlossaryForm", {to:"main"});  
+    //this.render("updateGlossaryForm", {to:"main"}); 
   // }
 });
 
 Router.route('/update/:_id', {
-    //console.log("rendering /update" + this.params._id);
-    //this.render("navbar", {to:"header"});
-    template: "updateGlossaryForm",
+    //template: "updateGlossaryForm",
+    yieldTemplates: {
+            'navbar': { to: 'header'},
+            'updateGlossaryForm': { to: 'main'}
+    },
     data: function(){
         var currentGlossary = this.params._id;
         return Glossaries.findOne({_id: currentGlossary});
@@ -77,14 +83,14 @@ Router.route('/update/:_id', {
 
 Router.route('/my_glossaries', function () {
     console.log("rendering /my_glossaries");
-    //this.render("navbar", {to:"header"});
+    this.render("navbar", {to:"header"});
     this.render("myGlossaries", {to:"main"});  
   // }
 });
 
 Router.route('/search', function () {
     console.log("rendering /search");
-    //this.render("navbar", {to:"header"});
+    this.render("navbar", {to:"header"});
     this.render("searchBox", {to:"main"});  
   // }
 });

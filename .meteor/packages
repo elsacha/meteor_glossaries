@@ -26,6 +26,4 @@ aldeed:autoform
 aldeed:collection2
 ian:accounts-ui-bootstrap-3
 aldeed:delete-button
-easy:search
-easysearch:autosuggest
-easysearch:core
+matteodem:easy-search

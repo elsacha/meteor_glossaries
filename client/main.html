@@ -23,9 +23,21 @@
         Glossaries
       </a>
     </div>
+    {{#if currentUser}}
+    <div class="nav navbar-nav">
+      <a class="navbar-brand" href="/my_glossaries">
+        My glossaries
+      </a>
+    </div>
+    {{/if}}
+    <div class="nav navbar-nav">
+      <a class="navbar-brand" href="/search">
+        Search
+      </a>
+    </div>
     <div class="nav navbar-nav">
     {{> loginButtons}}
-</div>
+    </div>
   </div>
 </nav>
 </template>
@@ -68,8 +80,8 @@
 <template name="myGlossaries">
   <div class="row">
     {{#each my_glossaries}}
-      {{> glossary}}
-      {{> quickRemoveButton collection="Glossaries" _id=this._id}}
+      {{> glossary_concise_view}}
+      <!-- {{> quickRemoveButton collection="Glossaries" _id=this._id}} -->
     {{/each}}
   </div>
 </template>
@@ -117,6 +129,7 @@
 </template> -->
 
 <template name="updateGlossaryForm">
+  <!-- {{> navbar}} -->
   {{> quickForm collection="Glossaries" doc=this id="updateGlossaryForm" type="update"}}
 </template>
 
@@ -152,6 +165,12 @@
             <li><a href="/view/{{this._id}}">{{title}}</a></li>
         {{/EasySearch.Each}}
     </ul>
+
+    {{> EasySearch.LoadMore index=glossariesIndex}}
+
+    {{#EasySearch.IfNoResults index=glossariesIndex}}
+      <div class="no-results">No results found!</div>
+    {{/EasySearch.IfNoResults}}
 </template>
 
 
