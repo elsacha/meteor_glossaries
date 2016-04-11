@@ -23,7 +23,7 @@ import './main.html';
 
 // set up the main template the the router will use to build pages
 Router.configure({
-  layoutTemplate: 'ApplicationLayout'
+  layoutTemplate: 'layout'
 });
 
 // specify the top level route, the page users see when they arrive at the site
@@ -33,22 +33,26 @@ Router.route('/', function () {
   //   this.render("not_authorized", {to: "main"});
   // } else {
     console.log("rendering root");
-    this.render("navbar", {to:"header"});
-    this.render("home", {to:"main"});  
+    //this.render("navbar", {to:"header"});
+    //this.render("home", {to:"main"});
+    this.render('home');
+    //this.render("footer", {to:"footer"});  
   // }
 });
 
 Router.route('/glossaries', function () {
     console.log("rendering /glossaries");
-    this.render("navbar", {to:"header"});
-    this.render("glossaries", {to:"main"});  
+    //this.render("navbar", {to:"header"});
+    //this.render("glossaries", {to:"main"}); 
+    this.render('glossaries'); 
   // }
 });
 
 Router.route('/add', function () {
     console.log("rendering /add");
-    this.render("navbar", {to:"header"});
-    this.render("insertGlossaryForm", {to:"main"});  
+    // this.render("navbar", {to:"header"});
+    // this.render("insertGlossaryForm", {to:"main"});  
+    this.render('insertGlossaryForm');
   // }
 });
 
@@ -56,7 +60,7 @@ Router.route('/add', function () {
 Router.route('/view/:_id', {
     //template: "glossary_full_view",
     yieldTemplates: {
-            'navbar': { to: 'header'},
+            //'navbar': { to: 'header'},
             'glossary_full_view': { to: 'main'}
     },
     data: function(){
@@ -70,7 +74,7 @@ Router.route('/view/:_id', {
 Router.route('/update/:_id', {
     //template: "updateGlossaryForm",
     yieldTemplates: {
-            'navbar': { to: 'header'},
+            //'navbar': { to: 'header'},
             'updateGlossaryForm': { to: 'main'}
     },
     data: function(){
@@ -83,15 +87,17 @@ Router.route('/update/:_id', {
 
 Router.route('/my_glossaries', function () {
     console.log("rendering /my_glossaries");
-    this.render("navbar", {to:"header"});
-    this.render("myGlossaries", {to:"main"});  
+    // this.render("navbar", {to:"header"});
+    // this.render("myGlossaries", {to:"main"}); 
+    this.render('myGlossaries'); 
   // }
 });
 
 Router.route('/search', function () {
     console.log("rendering /search");
-    this.render("navbar", {to:"header"});
-    this.render("searchBox", {to:"main"});  
+    // this.render("navbar", {to:"header"});
+    // this.render("searchBox", {to:"main"});  
+    this.render('searchBox');
   // }
 });
 
