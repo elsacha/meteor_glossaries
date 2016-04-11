@@ -34,7 +34,7 @@ Router.route('/', function () {
   // } else {
     console.log("rendering root");
     this.render("navbar", {to:"header"});
-    this.render("glossaries", {to:"main"});  
+    this.render("home", {to:"main"});  
   // }
 });
 
@@ -105,5 +105,19 @@ AutoForm.addHooks(['updateGlossaryForm'],
     return modifier;
   }
 });
+
+//Reactive tabs configuration
+//register
+ReactiveTabs.createInterface({
+  template: 'basicTabs',
+  onChange: function (slug, template) {
+    // This callback runs every time a tab changes.
+    // The `template` instance is unique per {{#basicTabs}} block.
+    console.log('[tabs] Tab has changed! Current tab:', slug);
+    console.log('[tabs] Template instance calling onChange:', template);
+  }
+});
+
+
 
 
