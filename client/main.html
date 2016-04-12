@@ -79,41 +79,42 @@
 
 <!-- glossary consisi view (title, language combination) -->
 <template name="glossary_concise_view">
-  <h3>{{this.title}}</h3>
-  <p>
-    {{this.source_language}} - {{this.target_language}}
-    Subject: {{this.subject}} 
-    <a href="/view/{{this._id}}" class="btn btn-primary" role="button">View</a>
-  </p>
+  <div class="row">
+        <p>
+          {{this.source_language}} - {{this.target_language}}
+          Subject: {{this.subject}} 
+          <a href="/view/{{this._id}}" class="btn btn-primary" role="button">View</a>
+          {{> quickRemoveButton collection="Glossaries" _id=this._id beforeRemove=beforeRemove}}
+        </p>
+  </div>
 </template>
 
 <!-- full glossary view -->
 <template name="glossary_full_view">
-  <h3>{{this.title}}</h3>
-  <p>{{this.source_language}} - {{this.target_language}}</p>
-  <p>Subject: {{this.subject}}</p>
-  <h4>Terms:</h4>
-  <ol>
-  {{#each this.terms}}
-    <li>{{this.source_term}} - {{this.target_term}}</li>
-  {{/each}}
-</ol>
-<a href="/update/{{this._id}}" class="btn btn-primary" role="button">Update</a>
-{{> quickRemoveButton collection="Glossaries" _id=this._id beforeRemove=beforeRemove}}
+    <h3>{{this.title}}</h3>
+    <p>{{this.source_language}} - {{this.target_language}}</p>
+    <p>Subject: {{this.subject}}</p>
+    <h4>Terms:</h4>
+    <ol>
+    {{#each this.terms}}
+      <li>{{this.source_term}} - {{this.target_term}}</li>
+    {{/each}}
+    </ol>
+    <a href="/update/{{this._id}}" class="btn btn-primary" role="button">Update</a>
+    <!-- {{> quickRemoveButton collection="Glossaries" _id=this._id beforeRemove=beforeRemove}} -->
 </template>
 
 <template name="myGlossaries">
-  <div class="row">
-    {{#each my_glossaries}}
-      {{> glossary_concise_view}}
-      <!-- {{> quickRemoveButton collection="Glossaries" _id=this._id}} -->
-    {{/each}}
-  </div>
+  <h3>My glossaries</h3>
+  {{#each my_glossaries}}
+    {{> glossary_concise_view}}
+    <!-- {{> quickRemoveButton collection="Glossaries" _id=this._id}} -->
+  {{/each}}
 </template>
 
 <template name="insertGlossaryForm">
-  <h3>Create a glossary</h3>
-  {{> quickForm collection="Glossaries" id="insertGlossaryForm" type="insert"}}
+    <h3>Create a glossary</h3>
+    {{> quickForm collection="Glossaries" id="insertGlossaryForm" type="insert"}}
 </template>
 
 <!-- <template name="insertGlossaryForm">
@@ -155,13 +156,11 @@
 </template> -->
 
 <template name="updateGlossaryForm">
-  <h3>Glossary update</h3>
-  <div class="row">
-    <div class = "col-xs-12 col-md-8">
-      {{> quickForm collection="Glossaries" doc=this id="updateGlossaryForm" type="update"}}
-    </div>
-  </div>
+    <h3>Glossary update</h3>
+    {{> quickForm collection="Glossaries" doc=this id="updateGlossaryForm" type="update"}}
 </template>
+
+
 
 <!-- <template name="updateGlossaryForm">
   {{#autoForm collection="Glossaries" doc=this id="updateGlossaryForm" type="update"}}
@@ -186,21 +185,33 @@
 </template> -->
 
 <template name="searchBox">
-    {{> EasySearch.Input index=glossariesIndex }}
-    <!-- <div class="autosuggest-component">
-      {{> EasySearch.Autosuggest index=glossariesIndex}}
-    </div> -->
+      <h3>Search</h3>
+      {{> EasySearch.Input index=glossariesIndex }}
+      <!-- <div class="autosuggest-component">
+        {{> EasySearch.Autosuggest index=glossariesIndex}}
+      </div> -->
+      <ul>
+          {{#EasySearch.Each index=glossariesIndex }}
+              <li><a href="/view/{{this._id}}">{{title}}</a></li>
+          {{/EasySearch.Each}}
+      </ul>
+
+      {{> EasySearch.LoadMore index=glossariesIndex}}
+
+      {{#EasySearch.IfNoResults index=glossariesIndex}}
+        <div class="no-results">No results found!</div>
+      {{/EasySearch.IfNoResults}}
+</template>
+
+<template name="sidebar">
+  <div id="rcorners">
+    <h4>Recently added</h4>
     <ul>
-        {{#EasySearch.Each index=glossariesIndex }}
-            <li><a href="/view/{{this._id}}">{{title}}</a></li>
-        {{/EasySearch.Each}}
+        {{#each recent_glossaries}}
+          <li><a href="/view/{{this._id}}">{{title}}</a></li>
+        {{/each}}
     </ul>
-
-    {{> EasySearch.LoadMore index=glossariesIndex}}
-
-    {{#EasySearch.IfNoResults index=glossariesIndex}}
-      <div class="no-results">No results found!</div>
-    {{/EasySearch.IfNoResults}}
+  </div>
 </template>
 
 <template name="footer">
@@ -222,11 +233,13 @@
                 </div>
                 <div class="col-xs-12">
                     <p style="padding:10px;"></p>
-                    <p align=center>© Portfolio website 2016</p>
+                    <p align=center>© Glossaries 2016</p>
                 </div>
     </div><!-- end row-->
   </div>
 </template>
+
+
 
 
 

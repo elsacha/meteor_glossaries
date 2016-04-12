@@ -28,6 +28,17 @@ Template.glossary_full_view.helpers({
   }
 })
 
+Template.glossary_concise_view.helpers({
+  beforeRemove: function () {
+    return function (collection, id) {
+      var doc = collection.findOne(id);
+      if (confirm('Really delete "' + doc.name + '"?')) {
+        this.remove();
+      }
+    };
+  }
+})
+
 // Template.glossary.helpers({
 //   //display all publicly available glossaries
 //   title: function(glos_id){
@@ -80,4 +91,15 @@ Template.home.helpers({
     // See the `advanced use` section below to learn about dynamic tabs.
     // return Session.get('activeTab'); // Returns "people", "places", or "things".
   }
+});
+
+Template.sidebar.helpers({
+  recent_glossaries:function(){
+    //return Glossaries.find().sort({lastUpdated:-1}).limit(3);
+    return Glossaries.find({}, {sort: {lastUpdated: -1}});
+  }
+})
+
+Template.searchBox.helpers({
+  glossariesIndex: () => GlossariesIndex
 });

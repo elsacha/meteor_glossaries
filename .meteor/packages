@@ -19,7 +19,6 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 
 autopublish             # Publish all data to the clients (for prototyping)
 insecure                # Allow all DB writes from clients (for prototyping)
-twbs:bootstrap
 iron:router
 accounts-password
 aldeed:autoform
@@ -28,3 +27,7 @@ ian:accounts-ui-bootstrap-3
 aldeed:delete-button
 matteodem:easy-search
 templates:tabs
+tanis:bootstrap-social
+matb33:bootstrap-glyphicons
+twbs:bootstrap
+liberation:shareit
