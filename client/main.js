@@ -3,23 +3,6 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import './main.html';
 
-// Template.hello.onCreated(function helloOnCreated() {
-//   // counter starts at 0
-//   this.counter = new ReactiveVar(0);
-// });
-
-// Template.hello.helpers({
-//   counter() {
-//     return Template.instance().counter.get();
-//   },
-// });
-
-// Template.hello.events({
-//   'click button'(event, instance) {
-//     // increment the counter when button is clicked
-//     instance.counter.set(instance.counter.get() + 1);
-//   },
-// });
 
 // set up the main template the the router will use to build pages
 Router.configure({
@@ -28,77 +11,59 @@ Router.configure({
 
 // specify the top level route, the page users see when they arrive at the site
 Router.route('/', function () {
-  // if (!Meteor.user()) {
-  //   this.render("navbar", {to: "header"});
-  //   this.render("not_authorized", {to: "main"});
-  // } else {
     console.log("rendering root");
-    //this.render("navbar", {to:"header"});
-    //this.render("home", {to:"main"});
     this.render('home');
-    //this.render("footer", {to:"footer"});  
-  // }
 });
 
 Router.route('/glossaries', function () {
     console.log("rendering /glossaries");
-    //this.render("navbar", {to:"header"});
-    //this.render("glossaries", {to:"main"}); 
     this.render('glossaries'); 
-  // }
 });
 
 Router.route('/add', function () {
+  if (!Meteor.user()) {
+    this.render("not_authorized");
+  } else {
     console.log("rendering /add");
-    // this.render("navbar", {to:"header"});
-    // this.render("insertGlossaryForm", {to:"main"});  
     this.render('insertGlossaryForm');
-  // }
+  }
 });
 
 //view glossary by id
-Router.route('/view/:_id', {
-    //template: "glossary_full_view",
-    yieldTemplates: {
-            //'navbar': { to: 'header'},
-            'glossary_full_view': { to: 'main'}
-    },
-    data: function(){
-        var currentGlossary = this.params._id;
-        return Glossaries.findOne({_id: currentGlossary});
-    }
-    //this.render("updateGlossaryForm", {to:"main"}); 
-  // }
+Router.route('/view/:_id', function(){
+  if (!Meteor.user()) { //not logged users can see only public glossaries
+    var item = Glossaries.findOne({_id: this.params._id, public: true});
+    this.render('glossary_full_view', {data: item});
+  } else { //logged in users can see public glossaries and glossaries created by them
+    var item = Glossaries.findOne({ $or: [{_id: this.params._id, public: true},
+                                          {_id: this.params._id, glossary_author: Meteor.userId()}]});
+    //console.log("current user: " + Meteor.userId());
+    this.render('glossary_full_view', {data: item});
+  }
 });
 
-Router.route('/update/:_id', {
-    //template: "updateGlossaryForm",
-    yieldTemplates: {
-            //'navbar': { to: 'header'},
-            'updateGlossaryForm': { to: 'main'}
-    },
-    data: function(){
-        var currentGlossary = this.params._id;
-        return Glossaries.findOne({_id: currentGlossary});
-    }
-    //this.render("updateGlossaryForm", {to:"main"});  
-  // }
+Router.route('/update/:_id', function (){
+  var glos = Glossaries.findOne({_id: this.params._id});
+  console.log("current user: " + Meteor.userId());
+  console.log("glossary author: " + glos.glossary_author);
+  //users can edit only glossaries created by them
+
+  if (!Meteor.user() || (glos.glossary_author !== Meteor.userId())) {
+    this.render('not_authorized');
+  } else {
+    //var item = Glossaries.findOne({_id: this.params._id});
+    this.render('updateGlossaryForm', {data: glos});
+  }
 });
 
 Router.route('/my_glossaries', function () {
     console.log("rendering /my_glossaries");
-    // this.render("navbar", {to:"header"});
-    // this.render("myGlossaries", {to:"main"}); 
     this.render('myGlossaries'); 
-  // }
 });
 
 Router.route('/search', function () {
     console.log("rendering /search");
-    // this.render("navbar", {to:"header"});
-    // this.render("searchBox", {to:"main"});  
     this.render('searchBox');
-  // }
 });
 
 //delete null values from the array of terms when terms are deleted in the update form

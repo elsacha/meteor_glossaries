@@ -55,7 +55,7 @@
         <!-- <li class="active"><a href="/">Home</a></li> -->
         <li><a href="/search">Search</a></li>
         {{#if currentUser}}<li><a href="/my_glossaries">My glossaries</a></li>{{/if}}
-        <!-- <li><a href="#">Page 3</a></li>  -->
+        <li><a href="/glossaries">Glossaries list</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <!-- <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
@@ -69,39 +69,43 @@
 
 <!-- Top level template for the lobby page -->
 <template name="glossaries">
-  <div class="row">
     {{#each public_glossaries}}
-      {{> glossary_concise_view}}
+      {{#if canView this._id}}
+        {{> glossary_concise_view}}
       <!-- {{> quickRemoveButton collection="Glossaries" _id=this._id beforeRemove=beforeRemove}} -->
+      {{/if}}
     {{/each}}
-  </div>
 </template>
 
 <!-- glossary consisi view (title, language combination) -->
 <template name="glossary_concise_view">
-  <div class="row">
-        <p>
-          {{this.source_language}} - {{this.target_language}}
-          Subject: {{this.subject}} 
+        <p>{{this.source_language}} - {{this.target_language}}<br />
+        Subject: {{this.subject}}<br /> 
           <a href="/view/{{this._id}}" class="btn btn-primary" role="button">View</a>
-          {{> quickRemoveButton collection="Glossaries" _id=this._id beforeRemove=beforeRemove}}
+          {{#if isAuthor this._id}}
+            {{> quickRemoveButton collection="Glossaries" _id=this._id beforeRemove=beforeRemove}}
+          {{/if}}
         </p>
-  </div>
 </template>
 
 <!-- full glossary view -->
 <template name="glossary_full_view">
     <h3>{{this.title}}</h3>
-    <p>{{this.source_language}} - {{this.target_language}}</p>
-    <p>Subject: {{this.subject}}</p>
-    <h4>Terms:</h4>
-    <ol>
-    {{#each this.terms}}
-      <li>{{this.source_term}} - {{this.target_term}}</li>
-    {{/each}}
-    </ol>
-    <a href="/update/{{this._id}}" class="btn btn-primary" role="button">Update</a>
-    <!-- {{> quickRemoveButton collection="Glossaries" _id=this._id beforeRemove=beforeRemove}} -->
+    {{#if this.title}}
+        <p>{{this.source_language}} - {{this.target_language}}</p>
+
+        <p>Subject: {{this.subject}}</p>
+        <h4>Terms:</h4>
+        <ol>
+        {{#each this.terms}}
+          <li>{{this.source_term}} - {{this.target_term}}</li>
+        {{/each}}
+        </ol>
+        {{#if isAuthor this._id}} <!-- users can delete only glossaries that they created-->
+            <a href="/update/{{this._id}}" class="btn btn-primary" role="button">Update</a>
+            <!-- {{> quickRemoveButton collection="Glossaries" _id=this._id beforeRemove=beforeRemove}} -->
+        {{/if}}
+    {{/if}}
 </template>
 
 <template name="myGlossaries">
@@ -157,7 +161,7 @@
 
 <template name="updateGlossaryForm">
     <h3>Glossary update</h3>
-    {{> quickForm collection="Glossaries" doc=this id="updateGlossaryForm" type="update"}}
+    {{> quickForm collection="Glossaries" doc=this id="updateGlossaryForm" type="update" doc=this}}
 </template>
 
 
@@ -192,7 +196,9 @@
       </div> -->
       <ul>
           {{#EasySearch.Each index=glossariesIndex }}
-              <li><a href="/view/{{this._id}}">{{title}}</a></li>
+            {{#if canView this._id}}
+                <li><a href="/view/{{this._id}}">{{title}}</a></li>
+            {{/if}}
           {{/EasySearch.Each}}
       </ul>
 
@@ -208,10 +214,18 @@
     <h4>Recently added</h4>
     <ul>
         {{#each recent_glossaries}}
-          <li><a href="/view/{{this._id}}">{{title}}</a></li>
+          {{#if canView this._id}}
+            <li><a href="/view/{{this._id}}">{{title}}</a></li>
+          {{/if}}
         {{/each}}
     </ul>
   </div>
+</template>
+
+<template name="not_authorized">
+  <h2>Glossaries</h2>
+  <h4>Your personal language learning companion</h4>
+  <p>Please log in to create, share and update glossaries</p>
 </template>
 
 <template name="footer">

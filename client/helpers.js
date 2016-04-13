@@ -25,6 +25,10 @@ Template.glossary_full_view.helpers({
         this.remove();
       }
     };
+  },
+  isAuthor: function(glosId) {
+    var glosAuthor = Glossaries.findOne({_id: glosId});
+    return (glosAuthor.glossary_author === Meteor.userId());
   }
 })
 
@@ -36,28 +40,20 @@ Template.glossary_concise_view.helpers({
         this.remove();
       }
     };
+  },
+  isAuthor: function(glosId) {
+    var glosAuthor = Glossaries.findOne({_id: glosId});
+    return (glosAuthor.glossary_author === Meteor.userId());
   }
 })
 
-// Template.glossary.helpers({
-//   //display all publicly available glossaries
-//   title: function(glos_id){
-//   	glos = Glossaries.findOne({_id:glos_id});
-//     return glos.title;
-//   },
-//   subject: function(glos_id){
-//   	glos = Glossaries.findOne({_id:glos_id});
-//     return glos.subject;
-//   },
-//   source_language: function(glos_id){
-//   	glos = Glossaries.findOne({_id:glos_id});
-//     return glos.title;
-//   },
-//   target_language: function(glos_id){
-//   	glos = Glossaries.findOne({_id:glos_id});
-//     return glos.title;
-//   }
-// })
+Template.glossaries.helpers({
+  //display all publicly available glossaries
+  canView: function(glosId){
+  	var glos = Glossaries.findOne({_id:glosId});
+    return (glos.public || (glos.glossary_author === Meteor.userId()));
+  }
+})
 
 Template.myGlossaries.helpers({
   my_glossaries:function(){
@@ -97,9 +93,24 @@ Template.sidebar.helpers({
   recent_glossaries:function(){
     //return Glossaries.find().sort({lastUpdated:-1}).limit(3);
     return Glossaries.find({}, {sort: {lastUpdated: -1}});
+  },
+  canView: function(glosId){
+    var glos = Glossaries.findOne({_id:glosId});
+    return (glos.public || (glos.glossary_author === Meteor.userId()));
   }
 })
 
 Template.searchBox.helpers({
-  glossariesIndex: () => GlossariesIndex
+  glossariesIndex: () => GlossariesIndex,
+  canView: function(glosId){
+    var glos = Glossaries.findOne({_id:glosId});
+    return (glos.public || (glos.glossary_author === Meteor.userId()));
+  }
 });
+
+Template.updateGlossaryForm.helpers({
+  isAuthor: function(glosId) {
+    var glosAuthor = Glossaries.findOne({_id: glosId});
+    return (glosAuthor.glossary_author === Meteor.userId());
+  }
+})
