@@ -62,3 +62,45 @@ Meteor.startup(() => {
 		// })
   //  }
 });
+
+Meteor.publish("glossaries", function(){
+  var filter = {$or:[
+                {glossary_author : this.userId}, 
+                {public : true}
+                ]};
+  return Glossaries.find(filter);
+})
+
+Meteor.publish('users', function() {
+    return Meteor.users.find();
+});
+
+Glossaries.allow({
+  insert: function (userId, doc) {
+    // the user must be logged in, and the document must be owned by the user
+    return (userId);
+  },
+  update: function (userId, doc, fields, modifier) {
+    // can only change your own documents
+    return doc.glossary_author === userId;
+    //return true;
+  },
+  remove: function (userId, doc) {
+    // can only remove your own documents
+    return doc.glossary_author === userId;
+  },
+  fetch: ['glossary_author']
+});
+
+// Glossaries.deny({
+//   update: function (userId, doc, fields, modifier) {
+//     // can't change owners
+//     return _.contains(fields, 'glossary_author');
+//   },
+//   remove: function (userId, doc) {
+//     // can't remove locked documents
+//     return doc.locked;
+//   },
+//   fetch: ['locked'] // no need to fetch 'owner'
+// });
+

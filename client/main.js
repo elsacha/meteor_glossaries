@@ -1,5 +1,10 @@
+// subscribe to read data
+Meteor.subscribe("glossaries");
+Meteor.subscribe("users");
+
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+
 
 import './main.html';
 

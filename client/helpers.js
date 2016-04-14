@@ -92,7 +92,7 @@ Template.home.helpers({
 Template.sidebar.helpers({
   recent_glossaries:function(){
     //return Glossaries.find().sort({lastUpdated:-1}).limit(3);
-    return Glossaries.find({}, {sort: {lastUpdated: -1}});
+    return Glossaries.find({}, {sort: {lastUpdated: -1}, limit: 3});
   },
   canView: function(glosId){
     var glos = Glossaries.findOne({_id:glosId});
