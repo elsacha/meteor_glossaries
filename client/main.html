@@ -79,34 +79,58 @@
 
 <!-- glossary consisi view (title, language combination) -->
 <template name="glossary_concise_view">
-        <h3>{{this.title}}</h3>
-        <p>{{this.source_language}} - {{this.target_language}}<br />
-        Subject: {{this.subject}}<br /> 
-          <a href="/view/{{this._id}}" class="btn btn-primary" role="button">View</a>
-          {{#if isAuthor this._id}}
-            {{> quickRemoveButton collection="Glossaries" _id=this._id beforeRemove=beforeRemove}}
-          {{/if}}
+  <div class="panel panel-info">
+      <div class="panel-heading">{{this.title}}</div>
+        <div class="panel-body">
+          <div class="media">
+            <a class="media-left media-middle" href="#">
+                <img class="media-object" src="placeholder_glossary_image1.png" alt="Glossary">
+            </a>
+            <div class="media-body">
+            <p>{{this.source_language}} - {{this.target_language}}<br />
+              Subject: {{this.subject}}<br /> 
+              <div class="btn-group" role="group">
+                  <a href="/view/{{this._id}}" class="btn btn-primary" role="button">View</a>
+                  {{#if isAuthor this._id}}
+                    {{> quickRemoveButton collection="Glossaries" _id=this._id beforeRemove=beforeRemove class="btn btn-danger"}}
+                  {{/if}}
+              </div><!--end btn-group-->
         </p>
+          </div> <!-- end <div class="media-body">-->
+        </div> <!-- <div class="media">-->
+      </div> <!-- end panel-body-->
+  </div> <!--end <div class="panel panel-primary">-->
 </template>
 
 <!-- full glossary view -->
 <template name="glossary_full_view">
-    <h3>{{this.title}}</h3>
-    {{#if this.title}}
-        <p>{{this.source_language}} - {{this.target_language}}</p>
+  <div class="panel panel-info">
+    <div class="panel-heading">{{this.title}}</div>
+    <!-- {{#if this.title}} -->
+    <div class="panel-body">
+          <div class="media">
+            <a class="media-left media-middle" href="#">
+                <img class="media-object" src="placeholder_glossary_image1.png" alt="Glossary">
+            </a>
+            <div class="media-body">
+                  <p>{{this.source_language}} - {{this.target_language}}</p>
 
-        <p>Subject: {{this.subject}}</p>
-        <h4>Terms:</h4>
-        <ol>
-        {{#each this.terms}}
-          <li>{{this.source_term}} - {{this.target_term}}</li>
-        {{/each}}
-        </ol>
-        {{#if isAuthor this._id}} <!-- users can delete only glossaries that they created-->
-            <a href="/update/{{this._id}}" class="btn btn-primary" role="button">Update</a>
-            <!-- {{> quickRemoveButton collection="Glossaries" _id=this._id beforeRemove=beforeRemove}} -->
-        {{/if}}
-    {{/if}}
+                  <p>Subject: {{this.subject}}</p>
+                  <h4>Terms:</h4>
+                  <ul class="list-group">
+                  {{#each this.terms}}
+                    <li class="list-group-item">{{this.source_term}} - {{this.target_term}}</li>
+                  {{/each}}
+                  </ul>
+                  {{#if isAuthor this._id}} <!-- users can delete only glossaries that they created-->
+                      <a href="/update/{{this._id}}" class="btn btn-primary" role="button">Update</a>
+                      <!-- {{> quickRemoveButton collection="Glossaries" _id=this._id beforeRemove=beforeRemove}} -->
+                  {{/if}}
+              <!-- {{/if}} -->
+            </div> <!-- end <div class="media-body"> -->
+          </div> <!-- end <div class="media"> -->
+      </div> <!-- end <div class="panel-body"> -->
+  </div> <!--end panel-->
 </template>
 
 <template name="myGlossaries">
