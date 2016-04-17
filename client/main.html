@@ -40,7 +40,7 @@
     </div>
   </div>
 </nav> -->
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -54,6 +54,7 @@
       <ul class="nav navbar-nav">
         <!-- <li class="active"><a href="/">Home</a></li> -->
         <li><a href="/search">Search</a></li>
+        <li><a href="/add">Add</a></li>
         {{#if currentUser}}<li><a href="/my_glossaries">My glossaries</a></li>{{/if}}
         <li><a href="/glossaries">Glossaries list</a></li>
       </ul>
@@ -110,7 +111,7 @@
     <div class="panel-body">
           <div class="media">
             <a class="media-left media-middle" href="#">
-                <img class="media-object" src="placeholder_glossary_image1.png" alt="Glossary">
+                <img class="media-object" src="./placeholder_glossary_image1.png" alt="Glossary">
             </a>
             <div class="media-body">
                   <p>{{this.source_language}} - {{this.target_language}}</p>
@@ -119,7 +120,9 @@
                   <h4>Terms:</h4>
                   <ul class="list-group">
                   {{#each this.terms}}
-                    <li class="list-group-item">{{this.source_term}} - {{this.target_term}}</li>
+                    <li class="list-group-item">
+                      {{this.source_term}} - {{this.target_term}}
+                    </li>
                   {{/each}}
                   </ul>
                   {{#if isAuthor this._id}} <!-- users can delete only glossaries that they created-->
@@ -214,37 +217,48 @@
 </template> -->
 
 <template name="searchBox">
-      <h3>Search</h3>
-      {{> EasySearch.Input index=glossariesIndex }}
-      <!-- <div class="autosuggest-component">
-        {{> EasySearch.Autosuggest index=glossariesIndex}}
-      </div> -->
-      <ul>
-          {{#EasySearch.Each index=glossariesIndex }}
-            {{#if canView this._id}}
-                <li><a href="/view/{{this._id}}">{{title}}</a></li>
-            {{/if}}
-          {{/EasySearch.Each}}
-      </ul>
+      <!-- <h3>Search</h3> -->
+      <div class="panel panel-info">
+        <div class="panel-heading">Search</div>
+          <div class="panel-body">
+            {{> EasySearch.Input index=glossariesIndex }}
+              <!-- <div class="autosuggest-component">
+                {{> EasySearch.Autosuggest index=glossariesIndex}}
+              </div> -->
+            <ul>
+                {{#EasySearch.Each index=glossariesIndex }}
+                  {{#if canView this._id}}
+                      <li><a href="/view/{{this._id}}">{{title}}</a></li>
+                  {{/if}}
+                {{/EasySearch.Each}}
+            </ul>
 
-      {{> EasySearch.LoadMore index=glossariesIndex}}
+            {{> EasySearch.LoadMore index=glossariesIndex}}
 
-      {{#EasySearch.IfNoResults index=glossariesIndex}}
-        <div class="no-results">No results found!</div>
-      {{/EasySearch.IfNoResults}}
+            {{#EasySearch.IfNoResults index=glossariesIndex}}
+              <div class="no-results">No results found!</div>
+            {{/EasySearch.IfNoResults}}
+        </div> <!-- end panel body-->
+    </div> <!-- <div class="panel panel-info"> -->
 </template>
 
 <template name="sidebar">
-  <div id="rcorners">
-    <h4>Recently added</h4>
-    <ul>
-        {{#each recent_glossaries}}
-          {{#if canView this._id}}
-            <li><a href="/view/{{this._id}}">{{title}}</a></li>
-          {{/if}}
-        {{/each}}
-    </ul>
-  </div>
+  <!-- <div id="rcorners"> -->
+  <div class="panel panel-primary">
+    <div class="panel-heading">Recently added</div>
+    <!-- {{#if this.title}} -->
+    <div class="panel-body">
+    <!-- <h4>Recently added</h4> -->
+      <ul>
+          {{#each recent_glossaries}}
+            {{#if canView this._id}}
+              <li><a href="/view/{{this._id}}">{{title}}</a></li>
+            {{/if}}
+          {{/each}}
+      </ul>
+ <!--  </div> -->
+  </div> <!-- end panel body-->
+</div> <!-- <div class="panel panel-info"> -->
 </template>
 
 <template name="not_authorized">

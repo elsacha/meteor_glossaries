@@ -2,65 +2,127 @@ import { Meteor } from 'meteor/meteor';
 
 Meteor.startup(() => {
   // code to run on server at startup
-  // if (!Glossaries.findOne()){
-  //       console.log("creating sample glossaries");
-  //       var glos = 
-  //       [
-  //          {
-  //          	title: "Terms for business meetings",
-  //       	source_language: "English",
-  //       	target_language: "French",
-  //       	subject: "business terminology",
-  //       	terms: 
-  //       	[
-  //       		{
-	 //        		source_term: "business meeting",
-	 //        		target_term: "réunion d'affaires",
-	 //        		comment: "comment 1",
-	 //        		term_author: "sRJKpKXHZxQXRbJT71"
-  //       		},
+  if (!Glossaries.findOne()){
+        console.log("creating sample glossaries");
+        var glos = 
+        [
+           {
+             title: "Terms for business meetings",
+        	   source_language: "English",
+        	   target_language: "French",
+        	   subject: "business terminology",
+        	terms: 
+        	[
+        		{
+	        		source_term: "business meeting",
+	        		target_term: "réunion d'affaires",
+	        		term_author: "admin"
+        		},
 
-  //       		{
-	 //        		source_term: "sign a contract",
-	 //        		target_term: "signer un contrat",
-	 //        		comment: "comment 1",
-	 //        		term_author: "author2"
-  //       		}
-  //       	],
+        		{
+	        		source_term: "sign a contract",
+	        		target_term: "signer un contrat",
+	        		term_author: "admin"
+        		}
+        	],
         	
-  //       	glossary_author: "author1",
-  //           public: true
-  //   	   },
-  //   	   {
-  //   	   	title: "Tourism",
-  //       	source_language: "English",
-  //       	target_language: "Spanish",
-  //       	subject: "tourism",
-  //       	terms: 
-  //       	[
-  //       		{
-	 //        		source_term: "travel agency",
-	 //        		target_term: "agencia de viajes",
-	 //        		comment: "comment 3",
-	 //        		term_author: "author2"
-  //       		},
+        	glossary_author: "admin",
+          public: true
+    	   },
+    	   {
+    	   	title: "Tourism",
+        	source_language: "English",
+        	target_language: "Spanish",
+        	subject: "tourism",
+        	terms: 
+        	[
+        		{
+	        		source_term: "travel agency",
+	        		target_term: "agencia de viajes",
+	        		term_author: "admin"
+        		},
 
-  //       		{
-	 //        		source_term: "sea",
-	 //        		target_term: "mar",
-	 //        		comment: "comment 4",
-	 //        		term_author: "author3"
-  //       		}
-  //       	],
-  //      		glossary_author: "author2",
-  //           public: true
-  //   	   }
-  //   	];
-  //   	//apparently multiple document insert does not function in Meteor's mongodb
-  //   	_.each(glos, function(g) { 
-  // 			Glossaries.insert(g);
-		// })
-  //  }
+        		{
+	        		source_term: "sea",
+	        		target_term: "mar",
+	        		term_author: "admin"
+        		}
+        	],
+       		glossary_author: "admin",
+          public: true
+    	   },
+         {
+          title: "Computer science",
+          source_language: "English",
+          target_language: "French",
+          subject: "computer science",
+          terms: 
+          [
+            {
+              source_term: "computer",
+              target_term: "ordinateur",
+              term_author: "admin"
+            },
+
+            {
+              source_term: "network",
+              target_term: "réseau",
+              term_author: "admin"
+            }
+          ],
+          glossary_author: "admin",
+          public: true
+         },
+         {
+          title: "Medical terms",
+          source_language: "English",
+          target_language: "French",
+          subject: "medical terms, visit of a doctor",
+          terms: 
+          [
+            {
+              source_term: "sore throat",
+              target_term: "mal à la gorge",
+              term_author: "admin"
+            },
+
+            {
+              source_term: "ophthalmologist",
+              target_term: "ophtalmologue",
+              term_author: "admin"
+            }
+          ],
+          glossary_author: "admin",
+          public: true
+         },
+         {
+          title: "Air travel",
+          source_language: "English",
+          target_language: "Spanish",
+          subject: "helpful phrases to use at the airport",
+          terms: 
+          [
+            {
+              source_term: "boarding",
+              target_term: "abordaje",
+              term_author: "admin"
+            },
+
+            {
+              source_term: "ticket",
+              target_term: "billete",
+              term_author: "admin"
+            }
+          ],
+          glossary_author: "admin",
+          public: true
+         }
+    	];
+    	//apparently multiple document insert does not work in Meteor's mongodb
+    	_.each(glos, function(g) { 
+  			Glossaries.insert(g);
+		})
+   }
 });
 
 Meteor.publish("glossaries", function(){
