@@ -26,9 +26,10 @@ Template.glossary_full_view.helpers({
       }
     };
   },
-  isAuthor: function(glosId) {
-    var glosAuthor = Glossaries.findOne({_id: glosId});
-    return (glosAuthor.glossary_author === Meteor.userId());
+  canEdit: function(glosId) {
+    //user can edit all public glossaries and private glossaries that he created
+    var glos = Glossaries.findOne({_id: glosId});
+    return (glos.glossary_author === Meteor.userId() || glos.public);
   }
 })
 

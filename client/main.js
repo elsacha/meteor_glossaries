@@ -51,9 +51,9 @@ Router.route('/update/:_id', function (){
   var glos = Glossaries.findOne({_id: this.params._id});
   console.log("current user: " + Meteor.userId());
   console.log("glossary author: " + glos.glossary_author);
-  //users can edit only glossaries created by them
+  //users can edit only glossaries created by them or public glossaries
 
-  if (!Meteor.user() || (glos.glossary_author !== Meteor.userId())) {
+  if (!Meteor.user() || (glos.glossary_author !== Meteor.userId() && !glos.public)) {
     this.render('not_authorized');
   } else {
     //var item = Glossaries.findOne({_id: this.params._id});
@@ -70,6 +70,13 @@ Router.route('/search', function () {
     console.log("rendering /search");
     this.render('searchBox');
 });
+
+// Router.route('/pagination', function () {
+//     console.log("rendering /pagination");
+//     this.render('pagination'); 
+// });
+
+
 
 //delete null values from the array of terms when terms are deleted in the update form
 AutoForm.addHooks(['updateGlossaryForm'],

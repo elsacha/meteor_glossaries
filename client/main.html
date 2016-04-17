@@ -125,7 +125,7 @@
                     </li>
                   {{/each}}
                   </ul>
-                  {{#if isAuthor this._id}} <!-- users can delete only glossaries that they created-->
+                  {{#if canEdit this._id}} <!-- users can delete only glossaries that they created-->
                       <a href="/update/{{this._id}}" class="btn btn-primary" role="button">Update</a>
                       <!-- {{> quickRemoveButton collection="Glossaries" _id=this._id beforeRemove=beforeRemove}} -->
                   {{/if}}
@@ -290,6 +290,12 @@
                 </div>
     </div><!-- end row-->
   </div>
+</template>
+
+<template name="pagination">
+  <h2>Glossaries</h2>
+  {{> pages}}
+  {{> pagesNav}}
 </template>
 
 

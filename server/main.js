@@ -143,8 +143,8 @@ Glossaries.allow({
     return (userId);
   },
   update: function (userId, doc, fields, modifier) {
-    // can only change your own documents
-    return doc.glossary_author === userId;
+    // can only change public documents or private documents that you created
+    return ((doc.glossary_author === userId) || doc.public);
     //return true;
   },
   remove: function (userId, doc) {
